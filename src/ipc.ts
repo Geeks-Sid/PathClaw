@@ -40,7 +40,10 @@ function resolveWorkspaceAssetPath(
       : path.join(groupRoot, trimmed);
   const resolved = path.resolve(candidate);
 
-  if (resolved !== groupRoot && !resolved.startsWith(`${groupRoot}${path.sep}`)) {
+  if (
+    resolved !== groupRoot &&
+    !resolved.startsWith(`${groupRoot}${path.sep}`)
+  ) {
     throw new Error(`Media path escapes group workspace: ${inputPath}`);
   }
 

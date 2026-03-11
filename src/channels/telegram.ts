@@ -81,12 +81,22 @@ export class TelegramChannel implements Channel {
         }
       }
 
-      const isGroup = ctx.chat.type === 'group' || ctx.chat.type === 'supergroup';
-      this.opts.onChatMetadata(chatJid, timestamp, chatName, 'telegram', isGroup);
+      const isGroup =
+        ctx.chat.type === 'group' || ctx.chat.type === 'supergroup';
+      this.opts.onChatMetadata(
+        chatJid,
+        timestamp,
+        chatName,
+        'telegram',
+        isGroup,
+      );
 
       const group = this.opts.registeredGroups()[chatJid];
       if (!group) {
-        logger.debug({ chatJid, chatName }, 'Message from unregistered Telegram chat');
+        logger.debug(
+          { chatJid, chatName },
+          'Message from unregistered Telegram chat',
+        );
         return;
       }
 
@@ -100,7 +110,10 @@ export class TelegramChannel implements Channel {
         is_from_me: false,
       });
 
-      logger.info({ chatJid, chatName, sender: senderName }, 'Telegram message stored');
+      logger.info(
+        { chatJid, chatName, sender: senderName },
+        'Telegram message stored',
+      );
     });
 
     const storeNonText = (ctx: any, placeholder: string) => {
@@ -115,9 +128,16 @@ export class TelegramChannel implements Channel {
         ctx.from?.id?.toString() ||
         'Unknown';
       const caption = ctx.message.caption ? ` ${ctx.message.caption}` : '';
-      const isGroup = ctx.chat.type === 'group' || ctx.chat.type === 'supergroup';
+      const isGroup =
+        ctx.chat.type === 'group' || ctx.chat.type === 'supergroup';
 
-      this.opts.onChatMetadata(chatJid, timestamp, undefined, 'telegram', isGroup);
+      this.opts.onChatMetadata(
+        chatJid,
+        timestamp,
+        undefined,
+        'telegram',
+        isGroup,
+      );
       this.opts.onMessage(chatJid, {
         id: ctx.message.message_id.toString(),
         chat_jid: chatJid,
@@ -174,7 +194,10 @@ export class TelegramChannel implements Channel {
         await this.bot.api.sendMessage(numericId, text);
       } else {
         for (let idx = 0; idx < text.length; idx += maxLength) {
-          await this.bot.api.sendMessage(numericId, text.slice(idx, idx + maxLength));
+          await this.bot.api.sendMessage(
+            numericId,
+            text.slice(idx, idx + maxLength),
+          );
         }
       }
       logger.info({ jid, length: text.length }, 'Telegram message sent');
@@ -211,7 +234,10 @@ export class TelegramChannel implements Channel {
           caption: part.caption,
         });
       } catch (err) {
-        logger.error({ jid, part, err }, 'Failed to send Telegram media message part');
+        logger.error(
+          { jid, part, err },
+          'Failed to send Telegram media message part',
+        );
       }
     }
   }
@@ -245,7 +271,8 @@ export class TelegramChannel implements Channel {
 
 registerChannel('telegram', (opts: ChannelOpts) => {
   const envVars = readEnvFile(['TELEGRAM_BOT_TOKEN']);
-  const token = process.env.TELEGRAM_BOT_TOKEN || envVars.TELEGRAM_BOT_TOKEN || '';
+  const token =
+    process.env.TELEGRAM_BOT_TOKEN || envVars.TELEGRAM_BOT_TOKEN || '';
   if (!token) {
     logger.warn('Telegram: TELEGRAM_BOT_TOKEN not set');
     return null;

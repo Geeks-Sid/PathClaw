@@ -39,7 +39,9 @@ export function formatOutbound(rawText: string): string {
   return text;
 }
 
-export function formatOutboundMessage(message: OutboundMessage): OutboundMessage {
+export function formatOutboundMessage(
+  message: OutboundMessage,
+): OutboundMessage {
   const parts: OutboundMessagePart[] = [];
 
   for (const part of message.parts) {
@@ -48,7 +50,9 @@ export function formatOutboundMessage(message: OutboundMessage): OutboundMessage
       if (text) parts.push({ type: 'text', text });
       continue;
     }
-    const caption = part.caption ? formatOutbound(part.caption) || undefined : undefined;
+    const caption = part.caption
+      ? formatOutbound(part.caption) || undefined
+      : undefined;
     parts.push({ ...part, caption });
   }
 

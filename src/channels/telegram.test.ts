@@ -116,7 +116,10 @@ describe('TelegramChannel', () => {
 
     await channel.sendMessage('tg:100200300', 'hello');
 
-    expect(currentBot().api.sendMessage).toHaveBeenCalledWith('100200300', 'hello');
+    expect(currentBot().api.sendMessage).toHaveBeenCalledWith(
+      '100200300',
+      'hello',
+    );
   });
 
   it('sends media parts sequentially', async () => {

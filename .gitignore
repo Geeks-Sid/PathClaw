@@ -33,6 +33,7 @@ __pycache__/
 # IDE
 .idea/
 .vscode/
+.claude/
 
 # Skills system (local per-installation state)
 .nanoclaw/
