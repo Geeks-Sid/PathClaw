@@ -160,7 +160,7 @@ Not yet a focus:
 
 If the WSI have serial resection tissues, it will be segment (based on image processing, pathclaw's claude code or gemini) into seperate tissue.
 
-![PathClaw Telegram demo](assets/pathclaw-telegram-demo.gif)
+![PathClaw multi-tissue demo](assets/v0.0.2_serial_resection.png)
 
 
 ## Important Disclaimer
